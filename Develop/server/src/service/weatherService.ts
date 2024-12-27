@@ -8,7 +8,7 @@ interface Coordinates {
   longitude: number;
 }
 // TODO: Define a class for the Weather object
-class weather {
+class Weather {
   city: string;
   date: Date;
   icon: string;
@@ -34,7 +34,7 @@ class WeatherService {
   private apiKey?: string;
   private cityName: '';
 
-  constructor(baseURL: string, apiKey: string, cityName: '') {
+  constructor(cityName: '') {
     this.baseURL = process.env.API_BASE_URL || '';
     this.apiKey = process.env.API_KEY || '';
     this.cityName = cityName;
@@ -56,7 +56,17 @@ class WeatherService {
    }
 
   // TODO: Create destructureLocationData method
-  // private destructureLocationData(locationData: Coordinates): Coordinates {}
+  private destructureLocationData(locationData: Coordinates): Coordinates {
+    if (!locationData || !locationData.longitude || !locationData.latitude)
+      console.error('invalid locationData', locationData)
+      throw new Error('coordinates required')
+    }
+
+    return {
+      name: locationData.cityName,
+      longitude: locationData.longitude,
+      latitude: locationData.latitude,
+    }
 
   // TODO: Create buildGeocodeQuery method
   // private buildGeocodeQuery(): string {}

@@ -75,7 +75,10 @@ class WeatherService {
    }
 
   // TODO: Create buildWeatherQuery method
-  // private buildWeatherQuery(coordinates: Coordinates): string {}
+   private buildWeatherQuery(coordinates: Coordinates): string {
+    const weatherQuery = `http://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.latitude}&lon=${coordinates.longitude}&exclude={minutely,hourly}&appid=${this.apiKey}`;
+    return weatherQuery;
+   }
 
   // TODO: Create fetchAndDestructureLocationData method
   // private async fetchAndDestructureLocationData() {}

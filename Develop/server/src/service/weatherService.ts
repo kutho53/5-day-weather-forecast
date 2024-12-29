@@ -69,7 +69,10 @@ class WeatherService {
     }
 
   // TODO: Create buildGeocodeQuery method
-  // private buildGeocodeQuery(): string {}
+   private buildGeocodeQuery(): string {
+    const geoQuery = `http://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(this.cityName)}&limit={limit}&appid=${this.apiKey}`;
+    return geoQuery;
+   }
 
   // TODO: Create buildWeatherQuery method
   // private buildWeatherQuery(coordinates: Coordinates): string {}

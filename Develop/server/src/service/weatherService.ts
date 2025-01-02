@@ -43,15 +43,6 @@ class WeatherService {
     this.city = city;
   }
 
-  // TODO: Create fetchLocationData method
-    //
-   private async fetchLocationData(query: string) {
-
-   }
-   
-
-   
-
   // TODO: Create buildGeocodeQuery method
   private buildGeocodeQuery(){
     return `https://api.openweathermap.org/geo/1.0/direct?q=${encodeURIComponent(this.city)}&limit=5&appid=${this.apiKey}`;
@@ -69,20 +60,18 @@ class WeatherService {
     return await fetch(query)
       .then(async (response) => {
         const data = await response.json();
-        const coordinates: Coordinates = { name: data.name, latitude: data.lat, longitude: data.lon };
+        const coordinates: Coordinates = { name: data[0].name, latitude: data[0].lat, longitude: data[0].lon };
         return coordinates;
       })
   }
 
-  // TODO: Create fetchWeatherData method
-  // private async fetchWeatherData(coordinates: Coordinates) {}
-
-  // TODO: Build parseCurrentWeather method
-  // private parseCurrentWeather(response: any) {}
-
   // TODO: Complete buildForecastArray method
-  private buildForecastArray(currentWeather: Weather, weatherData: any[]) {
-    
+  private buildForecastArray(weatherData: any[]) {
+    // Get one forecast per day -every 8 item
+
+    //go through array and get every 8 item 
+    //loop through new array with every 8 item and create new weather object
+    // return new array of objects 
   }
 
   // TODO: Complete getWeatherForCity method
@@ -92,11 +81,13 @@ class WeatherService {
     const coord = this.fetchAndDestructureLocationData();
     //build new weather url with lon and lat
     const weatherURL = this.buildWeatherQuery(await coord)
-    //return weather data as weather object
+    //return current weather data as weather object
     return fetch(weatherURL)
     .then(async (response) => {
       const data = await response.json();
       const currentWeather = data.list[0];
+      // const forecastWeather = this.buildForecastArray(data.list);
+      const forecastWeather = data.list.filter((_: any, index: number) => index % 8 === 0).map;
       const weather = new Weather(
         this.city,
         new Date(currentWeather.dt_txt).toLocaleDateString(),
@@ -106,12 +97,14 @@ class WeatherService {
         currentWeather.wind.speed,
         currentWeather.main.humidity
       );
-      return weather;
-    })
+      
+      return { weather, forecastWeather };
+ 
+    });
+    
+
     }
-
-
   }
-}
+
 
 export default new WeatherService();

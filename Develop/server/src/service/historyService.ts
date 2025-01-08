@@ -16,6 +16,7 @@ class HistoryService {
   // TODO: Define a read method that reads from the searchHistory.json file
   private async read(): Promise<City[]> {
     try {
+      //overwrites the cities array with the data from the searchHistory.json file
       const data = await fs.readFile('db/db.json', 'utf8');
       const cities: City[] = JSON.parse(data);
       return cities;

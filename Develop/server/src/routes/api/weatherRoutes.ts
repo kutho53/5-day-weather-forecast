@@ -9,8 +9,11 @@ import historyService from '../../service/historyService.js';
 // TODO: POST Request with city name to retrieve weather data
 router.post('/', (req, res) => {
   // TODO: GET weather data from city name
-  
+  const weatherData = await weatherService.getWeatherByCity(cityName); 
+  // (Assuming you have a weatherService to fetch data)
+
   // TODO: save city to search history
+
 });
 
 // TODO: GET search history
